@@ -20,12 +20,13 @@ class CoinListViewModel: ObservableObject {
             
         }, receiveValue: { cryptoContainer in
             self.coinViewModels = cryptoContainer.data.coins.map{ CoinViewModel(coin: $0) }
+            print(self.coinViewModels)
         })
     }
     
 }
 
-struct CoinViewModel {
+struct CoinViewModel: Hashable {
     private let coin: Coin
     
     init(coin: Coin) {

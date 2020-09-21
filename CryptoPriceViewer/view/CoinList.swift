@@ -9,9 +9,17 @@ import SwiftUI
 import Combine
 
 struct CoinList: View {
+    
+    @ObservedObject
+    private var viewModel = CoinListViewModel()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        // \.self = creates id for each item
+        List(self.viewModel.coinViewModels, id: \.self) { coinViewModel in
+            Text("\(coinViewModel.name) - \(coinViewModel.formattedPrice)")
+        }.onAppear {
+            self.viewModel.fetchCoins()
+        }
     }
 }
 
