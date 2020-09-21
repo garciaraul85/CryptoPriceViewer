@@ -5,7 +5,7 @@
 //  Created by Saulo Garcia on 9/21/20.
 //
 import Combine
-import Combine
+import Foundation
 
 class CoinListViewModel: ObservableObject {
     
@@ -38,7 +38,19 @@ struct CoinViewModel: Hashable {
     }
     
     var formattedPrice: String {
-        return coin.price
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .currency
+        
+        guard let price = Double(coin.price),
+              let formattedPrice = numberFormatter.string(from: NSNumber(value: price)) else {
+            return ""
+        }
+    
+        return formattedPrice
+    }
+    
+    var displayText: String {
+        return "\(name) - \(formattedPrice)"
     }
     
 }
